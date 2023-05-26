@@ -11,11 +11,11 @@ import json
 import sys,os
 from datetime import date,datetime
 
-import urllib2
+import urllib.request as urllib2
 import urllib
 import lxml.html as HTML
 #import ssl
-import ConfigParser
+import configparser as ConfigParser
 from threading import Thread
 #from gevent import monkey; monkey.patch_all()
 #import gevent
@@ -127,8 +127,8 @@ class excel_dearler:
 		#self.write_word_meaning()
 
 	def select(self):
-#mark 新加入的根据历史记录过滤熟词
- 		root_path ="output/"
+		#mark 新加入的根据历史记录过滤熟词
+		root_path ="output/"
 		file_lst = os.listdir(root_path)
 		for file in file_lst:
 			full_path = root_path+file
