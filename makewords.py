@@ -11,15 +11,15 @@ import json
 import sys,os
 from datetime import date,datetime
 import  urllib
-from urllib import urlretrieve
-import urllib2
+from urllib.request import urlretrieve
+import urllib.request as urllib2
 import lxml.html as HTML
 from multiprocessing import Pool
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import ssl
-import OpenSSL
+#import OpenSSL
 
 
 
@@ -51,8 +51,8 @@ def https_down_load(word):
 			fp =open(path,'w')
 			fp.write(content)
 			fp.close()
-	except Exception,e:
-		print e
+	except Exception as e:
+		print (e)
 
 def urlretrieve_down_load(word,num):
 	try:
@@ -64,8 +64,8 @@ def urlretrieve_down_load(word,num):
 			url = r'https://dict.youdao.com/dictvoice?audio={}&type=2'.format(word)
 			#time.sleep(1)
 			urlretrieve(url, path)	
-	except urllib.error,e:
-		print e
+	except urllib.error as e:
+		print (e)
 		num += 1
 		time.sleep(num)
 		urlretrieve_down_load(word,num)
@@ -85,17 +85,17 @@ def get_word_origin(word):
 	try:
 		req = urllib2.Request(url, headers=headers)
 		content = urllib2.urlopen(req).read()
-		if isinstance(content, unicode):
+		if isinstance(content, str):
 			pass
 		else:
 			content = content.decode('utf-8')
 		htmlSource = HTML.fromstring(content)
 		US_phonetic_symbol  =  htmlSource.xpath(r"//span[@class='en-US']/text()")
-		print US_phonetic_symbol
+		print (US_phonetic_symbol)
 		CH_word_origin  =  htmlSource.xpath(r"//span[@class='ciyuan-title']/text()")
 		#US_word_origin  = htmlSource.xpath(r"//span[@class='ciyuan-title']/text()")
-	except urllib2.URLError,e:
-		print e
+	except urllib2.URLError as e:
+		print (e)
 		time.sleep(4)
 		US_phonetic_symbol = get_word_origin(word)
 	else:
@@ -141,7 +141,7 @@ def get_wordmean(word):
     try:
         req = urllib2.Request(url, headers=headers)
         content = urllib2.urlopen(req).read()
-        if isinstance(content, unicode):
+        if isinstance(content, str):
             pass
         else:
             content = content.decode('utf-8')
@@ -149,8 +149,8 @@ def get_wordmean(word):
         mean =  htmlSource.xpath(r"//span[@class='prop']/text()|//li[@class='clearfix']/p/span/text()")
         #phonetic_symbol = htmlSource.xpath(r"//span[@class='base-top-voice']/text()")
         #print phonetic_symbol
-    except urllib2.URLError,e:
-        print e
+    except urllib2.URLError as e:
+        print (e)
         time.sleep(4)
         mean = get_wordmean(word)
     else:
@@ -304,7 +304,7 @@ class excel_dearler:
 		print (r'Start to write in meanning........\n')
 		workbook = self.open_excel()
 		sheet = workbook.get_sheet(0)
-		print u'start to download'
+		print(u'start to download')
 		for row in range(2,sheetr.nrows):
 # .			yisi = data = sheetr.cell(row,4).value
 			# #二次传输时自动识别弥补，不覆盖已有
@@ -386,7 +386,7 @@ class excel_dearler:
 		for i in range(1,len(row0)+1):
 			sheet.write(1,i,row0[i-1],self.title_style)
 		workbook.save(self.full_path)
-		print 'write_original_data\n'
+		print('write_original_data\n')
 		
 	#写excel
 	def write_word_frequency (self):

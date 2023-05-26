@@ -1,8 +1,10 @@
 # -*- coding:utf-8 -*-
 import sys,os
-import urllib2
-import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
+import urllib.request as urllib2
+from multiprocessing import Pool
+#import urllib3
+#import requests
+#from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from threading import Thread
 import ssl
 import re
@@ -35,8 +37,8 @@ def https_down_load(word):
 			fp =open(path,'w')
 			fp.write(content)
 			fp.close()
-	except Exception,e:
-		print e
+	except Exception as e:
+		print (e)
 		s =1
 		
 class text_dealer:
@@ -66,21 +68,22 @@ class text_dealer:
 		for word in self.map_word_frequency :
 			self.fopen.write(str(word)+'\n')
 		self.fopen.close()
-	
-if __name__ =='__main__':
+
+
+if __name__ == '__main__':
 	dealer = text_dealer(r'Steve Jobs.txt')
-	map = dealer.get_map_word_frequency
-	list =[]
-	s =0
-	num = len(map)/10
-	for i in range(0,10)
-		list.append(map[s:i*num] )
+	mapWd = dealer.get_map_word_frequency
+	listWd = []
+	s = 0
+	num = len(mapWd)/10
+	for i in range(0, 10):
+		listWd.append(mapWd[s:i*num] )
 		s = i*num
-	list.append(9*num:)	
+	listWd.append(mapWd[9*num:])
 	
 	p = Pool(10)
 	for t in range(10):
-		p.apply_async(cycle, args=(list[t],))
-	print ("等待所有子进程执行完毕...")
+		p.apply_async(cycle, args=(listWd[t],))
+	print("等待所有子进程执行完毕...")
 	p.close()
 	p.join()

@@ -1,4 +1,6 @@
-import xlrt
+#import xlrt
 from xlutils import copy
 
+
 def select():
+    pass

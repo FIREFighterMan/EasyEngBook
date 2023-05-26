@@ -34,7 +34,7 @@ def get_word_origin(word):
 	try:
 		req = urllib2.Request(url, headers=headers)
 		content = urllib2.urlopen(req).read()
-		if isinstance(content, unicode):
+		if isinstance(content, str):
 			pass
 		else:
 			content = content.decode('utf-8')
@@ -42,26 +42,26 @@ def get_word_origin(word):
 		#US_phonetic_symbol  =  htmlSource.xpath(r"//span[@class='en-US']/text()")
 		#详细中文翻译
 		translation=htmlSource.xpath('"//*[@id="yd-word-meaning"]/ul/li"')
-		print translation
+		print (translation)
 		#美国音标
 		phonetic_symbol =   htmlSource.xpath('"//*[@id="yd-word-pron"]/span[2]/text()"')
-		print phonetic_symbol
+		print (phonetic_symbol)
 		#词源中文翻译
 		simple_ch =   htmlSource.xpath('"//*[@id="yd-ciyuan"]/span/text()"')
-		print simple_ch
+		print (simple_ch)
 		#中文词源
 		origin_ch =   htmlSource.xpath('"//*[@id="yd-ciyuan"]/p"')
-		print origin_ch
+		print (origin_ch)
 		#英文词源
 		origin_en =   htmlSource.xpath('"//*[@id="yd-etym"]/dl/dd "')
-		print origin_en
+		print (origin_en)
 		#第一个例句
 		exst =   htmlSource.xpath('"//*[@id="yd-liju"]/dl[1]/dt"')
-		print exst
+		print (exst)
 		CH_word_origin  =  htmlSource.xpath('"//span[@class="ciyuan-title"]/text()"')
 		#US_word_origin  = htmlSource.xpath(r"//span[@class='ciyuan-title']/text()")
-	except urllib2.URLError,e:
-		print e
+	except urllib2.URLError as e:
+		print (e)
 		time.sleep(4)
 		US_phonetic_symbol = get_word_origin(word)
 	else:
@@ -76,7 +76,7 @@ def get_wordmean(word):
     try:
         req = urllib2.Request(url, headers=headers)
         content = urllib2.urlopen(req).read()
-        if isinstance(content, unicode):
+        if isinstance(content, str):
             pass
         else:
             content = content.decode('utf-8')
@@ -84,8 +84,8 @@ def get_wordmean(word):
         mean =  htmlSource.xpath(r"//span[@class='prop']/text()|//li[@class='clearfix']/p/span/text()")
         #phonetic_symbol = htmlSource.xpath(r"//span[@class='base-top-voice']/text()")
         #print phonetic_symbol
-    except urllib2.URLError,e:
-        print e
+    except urllib2.URLError as e:
+        print (e)
         time.sleep(4)
         mean = get_wordmean(word)
     else:
@@ -246,7 +246,7 @@ class excel_dearler:
 		for i in range(1,len(row0)+1):
 			sheet.write(1,i,row0[i-1],self.title_style)
 		workbook.save(self.full_path)
-		print 'write_original_data\n'
+		print ('write_original_data\n')
 		
 	#写excel
 	def write_word_frequency (self):

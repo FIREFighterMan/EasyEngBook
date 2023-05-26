@@ -41,8 +41,8 @@ def check_contain_num(check_str):
 
 
 def wanna_say():
-	print u'第一次写，随便写了点功能，后续可能会加入:\n[代理，CS，远程更新，并发调优，数据集中存储，界面交互，日志，反爬虫等模块]\t异常处理也会做的更仔细'
-	print u'WARNING:因公司网络限制无法下载媒体文件!公司外可以随意整。'
+	print (u'第一次写，随便写了点功能，后续可能会加入:\n[代理，CS，远程更新，并发调优，数据集中存储，界面交互，日志，反爬虫等模块]\t异常处理也会做的更仔细')
+	print (u'WARNING:因公司网络限制无法下载媒体文件!公司外可以随意整。')
     
  
 def	simple_ui():
@@ -61,30 +61,30 @@ def	simple_ui():
 class action:
 	def __init__(self,path):
 		try:
-			print u'配置模块初始化...'
+			print (u'配置模块初始化...')
 			self.config_dealer = config_dealer()
 #mark
 			self.path = path
 			#self.path = self.config_dealer.get_conf(r'book',r'path')
-			print u'文本模块初始化...'
+			print (u'文本模块初始化...')
 			self.txt_dealer = text_dealer(self.path)
-			print u'网络模块初始化...'
+			print (u'网络模块初始化...')
 			self.net_work_dealer = net_work(self.config_dealer)
-			print u'Excel模块初始化...'
+			print (u'Excel模块初始化...')
 			self.excel_dealer = excel_dearler(self.config_dealer,self.txt_dealer,self.net_work_dealer,self.path)
 		except Exception as error_info:
-			print u'【action_init ERROR】:{}'.format(error_info)
-			raw_input("Enter enter key to continue...")
+			print (u'【action_init ERROR】:{}'.format(error_info))
+			input("Enter enter key to continue...")
 		
 	def write_info_into_excel(self):
 		try:
-			print u'执行音频下载......'
+			print (u'执行音频下载......')
 			#self.excel_dealer.down_load_audio()
 
 			#get = int(raw_input("Insert the audio?('0'for Yes,other for no)"))
 
 			#if get ==0:
-			print u'执行音频插入......'
+			print (u'执行音频插入......')
 			#self.excel_dealer.insert_audio()
 
 			# print u'执行信息写入......'
@@ -97,13 +97,13 @@ class action:
 				# t.join()
 			self.excel_dealer.write_word_meaning()
 
-			print u'执行信息优化'
+			print (u'执行信息优化')
 			#self.excel_dealer.optimisation()
 
-			print u'信息写入完毕！'
+			print (u'信息写入完毕！')
 		except Exception as error_info:
-			print u'【action_init ERROR】:{}'.format(error_info)
-			raw_input("Enter enter key to continue...")
+			print (u'【action_init ERROR】:{}'.format(error_info))
+			input("Enter enter key to continue...")
 
 class excel_dearler:
 	def __init__(self, config,txt_dealer,net_work,path):
@@ -118,11 +118,11 @@ class excel_dearler:
 		self.title_style = xlwt.easyxf('pattern: pattern solid, fore_colour ocean_blue; font: bold on;')
 		self.content_styleA = self.set_title_style(5)
 		self.content_styleB = self.set_title_style(4)
-		print u'\t表格样式设置完毕！'
+		print (u'\t表格样式设置完毕！')
 		self.write_word_frequency()
-		print u'\t原始表格数据写入完毕！'
+		print (u'\t原始表格数据写入完毕！')
 		self.select()
-		print u'根据熟词库将单词筛选完毕！'
+		print (u'根据熟词库将单词筛选完毕！')
 		#self.write_all()
 		#self.write_word_meaning()
 
@@ -245,7 +245,7 @@ class excel_dearler:
 				counter +=1
 			row += 1
 		self.save(workbook)
-		print u'插入{}条音频，共{}条数据'.format(counter,sheetr.nrows)
+		print (u'插入{}条音频，共{}条数据'.format(counter,sheetr.nrows))
 
 	def init_config(self,path):
 		self.file_name = path+r'.xls'
@@ -265,7 +265,7 @@ class excel_dearler:
 		workbookr = xlrd.open_workbook(self.file_name)
 		sheetr = workbookr.sheet_by_index(0) # sheet索引从0开始
 		
-		print u'开始写入网页数据....（该处理时间较长，停一会儿就可以看效果,随时可以关闭程序）'
+		print (u'开始写入网页数据....（该处理时间较长，停一会儿就可以看效果,随时可以关闭程序）')
 		workbook = self.open_excel()
 		sheet = workbook.get_sheet(0)
 		for row in range(2,sheetr.nrows):
@@ -339,7 +339,7 @@ class excel_dearler:
 		workbook = xlwt.Workbook() #创建工作簿
 		workbook.add_sheet(u'所有',cell_overwrite_ok=True) #创建sheet
 		workbook.save(self.full_path) #保存文件
-		print u'\t\tExcel创建完毕!'
+		print (u'\t\tExcel创建完毕!')
         
 	def open_excel(self):
 		workbook = xlrd.open_workbook(self.full_path)
@@ -414,8 +414,8 @@ class text_dealer:
 			else:
 				out = 'NULL'
 			return out
-		except Exception,e:
-			print word
+		except Exception as e:
+			print (word)
 
 	#def search_sentence_by_word(self,word):
 	#	sentence = re.findall(r'[^.]*?{}[^.]*?.'.format(word), self.data)
@@ -458,8 +458,8 @@ class net_work:
 				fp = open(path, 'w')
 				fp.write(content)
 				fp.close()
-		except Exception, e:
-			print e
+		except Exception as e:
+			print (e)
 	def https_down_load(self,word):
 		try:
 			path = r'./https/{}.html'.format(word)
@@ -488,8 +488,8 @@ class net_work:
 				url = r'https://dict.youdao.com/dictvoice?audio={}&type=2'.format(word)
 				# time.sleep(1)
 				urllib.request.urlretrieve(url, path)
-		except urllib.error, e:
-			print e
+		except urllib.error as e:
+			print (e)
 			num += 1
 			time.sleep(num)
 			self.urlretrieve_down_load(word, num)
@@ -502,7 +502,7 @@ class net_work:
 		req = urllib2.Request(url, headers=headers)
 		content = urllib2.urlopen(req).read()
 		#print content
-		if isinstance(content, unicode):
+		if isinstance(content, str):
 			pass
 		else:
 			content = content.decode('utf-8')
@@ -676,17 +676,17 @@ class System_Thing:
 def test():
 	book = xlrd.open_workbook("sample.xls", formatting_info=True)
 	sheets = book.sheet_names()
-	print "sheets are:", sheets
+	print("sheets are:", sheets)
 	for index, sh in enumerate(sheets):
 		sheet = book.sheet_by_index(index)
-		print "Sheet:", sheet.name
+		print("Sheet:", sheet.name)
 		rows, cols = sheet.nrows, sheet.ncols
-		print "Number of rows: %s Number of cols: %s" % (rows, cols)
+		print("Number of rows: %s Number of cols: %s" % (rows, cols))
 		for row in range(rows):
 			for col in range(cols):
-				print "row, col is:", row + 1, col + 1,
+				print("row, col is:", row + 1, col + 1,)
 				thecell = sheet.cell(row, col)  # could get 'dump','value', 'xf_index'
-	print thecell.value,
+	print(thecell.value,)
 	xfx = sheet.cell_xf_index(row, col)
 	xf = book.xf_list[xfx]
 	bgx = xf.background.pattern_colour_index
@@ -695,4 +695,4 @@ if __name__ == '__main__':
 	simple_ui()
 	#test()
 	#net();
-	raw_input("Enter enter key to exit...")
+	input("Enter enter key to exit...")
